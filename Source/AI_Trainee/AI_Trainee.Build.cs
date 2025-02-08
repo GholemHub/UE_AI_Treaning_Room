@@ -8,6 +8,6 @@ public class AI_Trainee : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "AIModule", "GameplayTasks", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "NavigationSystem", "Niagara" });
 	}
 }
