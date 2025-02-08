@@ -6,6 +6,8 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
 #include "NavigationSystem.h"
+#include "GameFramework/Character.h"  // Include Character header
+
 
 UNPCMoveTo::UNPCMoveTo(FObjectInitializer const&)
 {
@@ -22,6 +24,10 @@ EBTNodeResult::Type UNPCMoveTo::ExecuteTask(UBehaviorTreeComponent& OwnerComp, u
 	const auto Pawn = Controller->GetPawn();
 	if (!Pawn)return EBTNodeResult::Failed;
 
+	ACharacter* Character = Cast<ACharacter>(Controller->GetPawn());
+	if (!Character)return EBTNodeResult::Failed;
+	Character->Jump();
+
 	const auto NavSys = UNavigationSystemV1::GetCurrent(Pawn);
 	FNavLocation NavLocation;
 	const auto Found = NavSys->GetRandomReachablePointInRadius(Pawn->GetActorLocation(), Radius, NavLocation);
@@ -33,6 +39,7 @@ EBTNodeResult::Type UNPCMoveTo::ExecuteTask(UBehaviorTreeComponent& OwnerComp, u
 	FVector End(NavLocation.Location.X, NavLocation.Location.Y, NavLocation.Location.Z + 100);
 	
 	DrawDebugLine(GetWorld(), NavLocation.Location, End, FColor::Red, false, 1.0f, 21.0f);
+	
 
 	return EBTNodeResult::Succeeded;
 
