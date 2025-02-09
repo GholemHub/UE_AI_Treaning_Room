@@ -6,6 +6,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "AIController.h"
+#include "../Weapon/BaseWeapon.h"
 
 // Sets default values
 AAI_NPC1::AAI_NPC1()
@@ -19,7 +20,7 @@ AAI_NPC1::AAI_NPC1()
 void AAI_NPC1::BeginPlay()
 {
 	Super::BeginPlay();
-
+	SpawnWeapon();
 	if (BehaviorTree)
 	{
 		//RunBehaviorTree(BehaviorTree);
@@ -39,5 +40,25 @@ void AAI_NPC1::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AAI_NPC1::SpawnWeapon()
+{
+	if (!GetWorld()) return;
+	if (WeaponClass)
+	{
+		Weapon = GetWorld()->SpawnActor<ABaseWeapon>(WeaponClass);
+	}
+	if (!Weapon) return;
+	
+
+	FAttachmentTransformRules AttachmentRools(EAttachmentRule::SnapToTarget, false);
+	Weapon->AttachToComponent(GetMesh(), AttachmentRools, "weapon_socket");
+}
+
+void AAI_NPC1::Fire()
+{
+	if (!Weapon) return;
+	Weapon->Fire();
 }
 

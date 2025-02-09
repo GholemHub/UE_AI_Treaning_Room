@@ -6,8 +6,10 @@
 #include "GameFramework/Character.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "AIController.h"
-#include "AI_NPC1.generated.h"
 
+
+#include "AI_NPC1.generated.h"
+class ABaseWeapon;
 UCLASS()
 class AI_TRAINEE_API AAI_NPC1 : public ACharacter
 {
@@ -22,13 +24,19 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+	void Fire();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 	UBehaviorTree* BehaviorTree;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	TSubclassOf<ABaseWeapon> WeaponClass;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	void SpawnWeapon();
+	
+private:
+	ABaseWeapon* Weapon;
 };
