@@ -25,7 +25,7 @@ public:
 	UBehaviorTree* BehaviorTree;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-	FName FocusOnKeyName = "SelfActorrrr";
+	FName FocusOnKeyName = "SelfActor";
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 	UBlackboardData* BlackboardData;
 private:
